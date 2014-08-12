@@ -1,0 +1,29 @@
+{
+  "name": "gulp-concat-po",
+  "version": "0.1.0",
+  "description": "A plugin for .po files concatenation",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JustBlackBird/gulp-concat-po.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JustBlackBird/gulp-concat-po/issues"
+  },
+  "author": {
+    "name": "Dmitriy Simushev",
+    "email": "simushevds@gmail.com"
+  },
+  "main": "index.js",
+  "keywords": [
+    "gulpplugin",
+    "po",
+    "gettext"
+  ],
+  "dependencies": {
+    "gulp-util": "~3.0.0",
+    "through2": "^0.5.1",
+    "pofile": "~0.2.12",
+    "lodash": "~2.4.1"
+  }
+}
