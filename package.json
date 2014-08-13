@@ -1,7 +1,7 @@
 {
   "name": "gulp-concat-po",
   "version": "0.1.0",
-  "description": "A plugin for .po files concatenation",
+  "description": "Gulp plugin for .po files concatenation",
   "license": "MIT",
   "repository": {
     "type": "git",
