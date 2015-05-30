@@ -61,7 +61,7 @@ var concatPoPlugin = function(fileName, options) {
 
                 if (sameItem) {
                     // Merge items by merging their references
-                    sameItem.references = sameItem.references.concat(currentItem.references);
+                    sameItem.references = lodash.unique(sameItem.references.concat(currentItem.references));
                 } else {
                     // Add item to the resulting file
                     combinedPo.items.push(currentItem);
