@@ -21,9 +21,9 @@
     "gettext"
   ],
   "dependencies": {
-    "gulp-util": "~3.0.0",
-    "through2": "^0.5.1",
-    "pofile": "~0.2.12",
-    "lodash": "~2.4.1"
+    "gulp-util": "^3.0.5",
+    "through2": "^0.6.5",
+    "pofile": "^0.2.12",
+    "lodash": "^3.9.3"
   }
 }
