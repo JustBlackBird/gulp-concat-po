@@ -21,13 +21,17 @@
     "gettext"
   ],
   "dependencies": {
-    "chai": "^4.2.0",
-    "gulp-util": "^3.0.5",
-    "lodash": "^3.9.3",
-    "mocha": "^6.2.0",
-    "pofile": "^0.2.12",
+    "lodash.find": "^4.6.0",
+    "lodash.merge": "^4.6.2",
+    "lodash.uniq": "^4.5.0",
+    "plugin-error": "^1.0.1",
+    "pofile": "^1.1.0",
     "through2": "^0.6.5",
     "vinyl": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
   },
   "scripts": {
     "test": "mocha --recursive test"

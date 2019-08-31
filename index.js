@@ -1,13 +1,16 @@
 var through = require('through2'),
-    gutil = require('gulp-util'),
+    PluginError = require('plugin-error'),
+    File = require('vinyl'),
     PoFile = require('pofile'),
-    lodash = require('lodash'),
+    _merge = require('lodash.merge'),
+    _find = require('lodash.find'),
+    _uniq = require('lodash.uniq'),
     path = require('path');
 
 /**
  * Concatenates several .po file into one.
  *
- * @param {String} name Name of the target file
+ * @param {String} fileName Name of the target file
  * @param {Object} options List of additional options.
  *
  * @returns {Function} A function which can be piped to files stream.
@@ -18,7 +21,7 @@ var concatPoPlugin = function(fileName, options) {
         firstFile = false;
 
     if (!fileName) {
-        throw new gutil.PluginError('gulp-concat-po', 'fileName argument must be set')
+        throw new PluginError('gulp-concat-po', 'fileName argument must be set')
     }
 
     return through.obj(function(file, enc, callback) {
@@ -31,7 +34,7 @@ var concatPoPlugin = function(fileName, options) {
         }
 
         if (file.isStream()) {
-            stream.emit('error', new gutil.PluginError('gulp-concat-po', 'Streams are not supported'));
+            stream.emit('error', new PluginError('gulp-concat-po', 'Streams are not supported'));
             callback();
 
             return;
@@ -45,7 +48,7 @@ var concatPoPlugin = function(fileName, options) {
 
             combinedPo = new PoFile();
             // Use headers from the first file
-            combinedPo.headers = lodash.merge(currentPo.headers, (options.headers || {}));
+            combinedPo.headers = _merge(currentPo.headers, (options.headers || {}));
             // Array.prototype.concat([]) is used to clone the items array
             combinedPo.items = currentPo.items.concat([]);
         } else {
@@ -54,14 +57,14 @@ var concatPoPlugin = function(fileName, options) {
                 var currentItem = currentPo.items[i];
 
                 // Check if the current item is already in the target po file.
-                var sameItem = lodash.find(combinedPo.items, function(item) {
+                var sameItem = _find(combinedPo.items, function(item) {
                     return (item.msgid === currentItem.msgid)
                         && (item.msgctxt === currentItem.msgctxt);
                 });
 
                 if (sameItem) {
                     // Merge items by merging their references
-                    sameItem.references = lodash.unique(sameItem.references.concat(currentItem.references));
+                    sameItem.references = _uniq(sameItem.references.concat(currentItem.references));
                 } else {
                     // Add item to the resulting file
                     combinedPo.items.push(currentItem);
@@ -71,7 +74,7 @@ var concatPoPlugin = function(fileName, options) {
 
         callback();
     }, function(callback) {
-        this.push(new gutil.File({
+        this.push(new File({
             cwd: firstFile.cwd,
             base: firstFile.base,
             path: path.join(firstFile.base, fileName),
