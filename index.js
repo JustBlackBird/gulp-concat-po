@@ -8,6 +8,20 @@ var through = require('through2'),
     path = require('path');
 
 /**
+ * Checks if an two items in of a PO file are equals.
+ *
+ * The function is curried, so it takes args by one.
+ *
+ * @param a
+ * @returns {function(*): boolean}
+ */
+var equalItems = function (a) {
+    return function (b) {
+        return (a.msgid === b.msgid) && (a.msgctxt === b.msgctxt);
+    };
+};
+
+/**
  * Concatenates several .po file into one.
  *
  * @param {String} fileName Name of the target file
@@ -16,12 +30,15 @@ var through = require('through2'),
  * @returns {Function} A function which can be piped to files stream.
  */
 var concatPoPlugin = function(fileName, options) {
-    var options = options || {},
-        combinedPo,
+    var combinedPo,
         firstFile = false;
 
+    if (!options) {
+        options = {};
+    }
+
     if (!fileName) {
-        throw new PluginError('gulp-concat-po', 'fileName argument must be set')
+        throw new PluginError('gulp-concat-po', 'fileName argument must be set');
     }
 
     return through.obj(function(file, enc, callback) {
@@ -57,10 +74,7 @@ var concatPoPlugin = function(fileName, options) {
                 var currentItem = currentPo.items[i];
 
                 // Check if the current item is already in the target po file.
-                var sameItem = _find(combinedPo.items, function(item) {
-                    return (item.msgid === currentItem.msgid)
-                        && (item.msgctxt === currentItem.msgctxt);
-                });
+                var sameItem = _find(combinedPo.items, equalItems(currentItem));
 
                 if (sameItem) {
                     // Merge items by merging their references
@@ -84,6 +98,6 @@ var concatPoPlugin = function(fileName, options) {
 
         callback();
     });
-}
+};
 
 module.exports = concatPoPlugin;
