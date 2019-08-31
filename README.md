@@ -1,4 +1,4 @@
-# gulp-concat-po [![NPM version](https://badge.fury.io/js/gulp-concat-po.png)](https://www.npmjs.org/package/gulp-concat-po)
+# gulp-concat-po [![NPM version](https://badge.fury.io/js/gulp-concat-po.png)](https://www.npmjs.org/package/gulp-concat-po) [![Build Status](https://travis-ci.org/JustBlackBird/gulp-concat-po.svg)](https://travis-ci.org/JustBlackBird/gulp-concat-po)
 
 > Correctly concatenates .po files.
 
